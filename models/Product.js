@@ -76,6 +76,6 @@ const productSchema = new mongoose.Schema(
 // Tạo index text để sau này làm chức năng tìm kiếm
 productSchema.index({ name: "text", brand: "text", modelCode: "text" });
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema, "watch-store");
 
 export default Product;
