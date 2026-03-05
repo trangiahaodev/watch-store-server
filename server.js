@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 // 1. Config
 dotenv.config();
@@ -16,6 +18,8 @@ app.use(express.json()); // Để đọc được JSON từ body request
 
 // 3. Routes
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Route mặc định để test server sống hay chết
 app.get("/", (req, res) => {
