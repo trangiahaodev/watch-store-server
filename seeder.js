@@ -6,7 +6,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 // Import Model (Nhớ phải có đuôi .js vì đang chạy mode ES Modules)
-// Nếu ông chưa export default ở model thì sửa thành import { Product }...
 import Product from "./models/Product.js";
 
 dotenv.config();
@@ -16,7 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // --- ĐOẠN QUAN TRỌNG NHẤT: ĐỌC FILE JSON BẰNG FS ---
-// Thay vì import, ta đọc file text rồi parse ra. Cách này không bao giờ lỗi.
 const productsPath = path.join(__dirname, "products.json");
 const products = JSON.parse(fs.readFileSync(productsPath, "utf-8"));
 
