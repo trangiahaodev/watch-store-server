@@ -135,7 +135,7 @@ export const getTopMenProducts = async (req, res) => {
   try {
     // Tạm thời lấy 10 sản phẩm Nam.
     // Nếu DB của ông có trường 'sold' (đã bán), có thể thêm .sort({ sold: -1 })
-    const products = await Product.find({ gender: "Nam" }).limit(10);
+    const products = await Product.find({ gender: "Nam" });
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ message: "Lỗi Server khi tải Đồng hồ Nam" });
@@ -147,7 +147,7 @@ export const getTopMenProducts = async (req, res) => {
 // @access  Public
 export const getTopWomenProducts = async (req, res) => {
   try {
-    const products = await Product.find({ gender: "Nữ" }).limit(10);
+    const products = await Product.find({ gender: "Nữ" });
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ message: "Lỗi Server khi tải Đồng hồ Nữ" });
@@ -160,7 +160,7 @@ export const getTopWomenProducts = async (req, res) => {
 export const getNewestProducts = async (req, res) => {
   try {
     // Sắp xếp theo _id hoặc createdAt giảm dần (-1) để lấy đồ mới nhất
-    const products = await Product.find({}).sort({ _id: -1 }).limit(4);
+    const products = await Product.find({}).sort({ _id: -1 });
     res.status(200).json({ products });
   } catch (error) {
     res.status(500).json({ message: "Lỗi Server khi tải Hàng mới về" });
