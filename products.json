@@ -1137,8 +1137,8 @@
     "price": 8990000,
     "description": "Đồng hồ G-Shock GBM-2100A-1A2 thiết kế biểu tượng, bộ máy Solar kết hợp công nghệ kết nối Bluetooth để nâng cao độ chính xác và độ tin cậy.",
     "brand": "G-Shock",
-    "modelCode": "GBM-2100A-1A2",
-    "slug": "gbm-2100a-1a2",
+    "modelCode": "GBM-2100A-1A2-1",
+    "slug": "gbm-2100a-1a2-1",
     "image": "/images/g-shock_nam_5.jpg",
     "specs": {
       "functions": [
@@ -1168,8 +1168,8 @@
     "price": 8990000,
     "description": "Đồng hồ G-Shock GBM-2100A-1A2 thiết kế biểu tượng, bộ máy Solar kết hợp công nghệ kết nối Bluetooth để nâng cao độ chính xác và độ tin cậy.",
     "brand": "G-Shock",
-    "modelCode": "GBM-2100A-1A2",
-    "slug": "gbm-2100a-1a2",
+    "modelCode": "GBM-2100A-1A2-2",
+    "slug": "gbm-2100a-1a2-2",
     "image": "/images/g-shock_nam_6.jpg",
     "specs": {
       "functions": [
@@ -1400,7 +1400,7 @@
     "brand": "Longines",
     "modelCode": "L1.649.4.72.2",
     "slug": "l16494722",
-    "image": "/images/longines_nam_1.jpg",
+    "image": "/images/longines_nu_1.jpg",
     "specs": {
       "functions": ["Ngày", "giờ", "phút"],
       "glass": "Sapphire (Kính chống trầy)",
@@ -1427,7 +1427,7 @@
     "brand": "Longines",
     "modelCode": "L1.649.4.52.2",
     "slug": "l16494522",
-    "image": "/images/longines_nam_2.jpg",
+    "image": "/images/longines_nu_2.jpg",
     "specs": {
       "functions": ["Ngày", "giờ", "phút"],
       "glass": "Sapphire (Kính chống trầy) – Anti Reflective Coating (Phủ chống chói)",
@@ -1674,8 +1674,8 @@
     "price": 13830000,
     "description": "Orient Bambino Sun & Moon – 75th Anniversary Limited Edition RA-AK0808S30B kỷ niệm 75 năm thành lập công ty Orient. Điểm đặc trưng: Logo Orient viết tay, Kim xanh và tặng kèm 1 bộ dây da bê màu nâu.",
     "brand": "Orient",
-    "modelCode": "RA-AK0808S30B (Giới hạn 5.500 chiếc toàn cầu)",
-    "slug": "ra-ak0808s30b-gii-hn-5500-chic-ton-cu",
+    "modelCode": "RA-AK0808S30B-1",
+    "slug": "ra-ak0808s30b-gii-hn-5500-chic-ton-cu-1",
     "image": "/images/orient_nam_5.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Sun And Moon (ngày đêm)"],
@@ -1700,8 +1700,8 @@
     "price": 13830000,
     "description": "Orient Bambino Sun & Moon – 75th Anniversary Limited Edition RA-AK0808S30B kỷ niệm 75 năm thành lập công ty Orient. Điểm đặc trưng: Logo Orient viết tay, Kim xanh và tặng kèm 1 bộ dây da bê màu nâu.",
     "brand": "Orient",
-    "modelCode": "RA-AK0808S30B (Giới hạn 5.500 chiếc toàn cầu)",
-    "slug": "ra-ak0808s30b-gii-hn-5500-chic-ton-cu",
+    "modelCode": "RA-AK0808S30B-2",
+    "slug": "ra-ak0808s30b-gii-hn-5500-chic-ton-cu-2",
     "image": "/images/orient_nam_6.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Sun And Moon (ngày đêm)"],
@@ -2260,7 +2260,7 @@
     "brand": "Seiko",
     "modelCode": "T122.210.11.033.00",
     "slug": "t1222101103300",
-    "image": "/images/unknown_nu_1.jpg",
+    "image": "/images/tissot_nu_3.jpg",
     "specs": {
       "functions": ["Lịch Ngày"],
       "glass": "Sapphire (Kính Chống Trầy)",
@@ -2285,7 +2285,7 @@
     "brand": "Tissot",
     "modelCode": "T063.210.22.037.00",
     "slug": "t0632102203700",
-    "image": "/images/tissot_nu_3.jpg",
+    "image": "/images/tissot_nu_4.jpg",
     "specs": {
       "functions": ["Lịch ngày"],
       "glass": "Sapphire (Kính chống trầy)",
@@ -2311,7 +2311,7 @@
     "brand": "Tissot",
     "modelCode": "T085.210.22.013.00",
     "slug": "t0852102201300",
-    "image": "/images/tissot_nu_4.jpg",
+    "image": "/images/tissot_nu_5.jpg",
     "specs": {
       "functions": ["Lịch Ngày"],
       "glass": "Sapphire (Kính Chống Trầy)",
