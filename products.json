@@ -1959,7 +1959,7 @@
     "brand": "Seiko",
     "modelCode": "SRPK87K1",
     "slug": "srpk87k1",
-    "image": "/images/unknown_nam_1.jpg",
+    "image": "/images/seiko_nam_1.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Hacking Second"],
       "glass": "Hardlex Crystal",
@@ -1984,7 +1984,7 @@
     "brand": "Seiko",
     "modelCode": "SRPK91K1",
     "slug": "srpk91k1",
-    "image": "/images/unknown_nam_2.jpg",
+    "image": "/images/seiko_nam_2.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Hacking Second"],
       "glass": "Hardlex Crystal",
@@ -2009,7 +2009,7 @@
     "brand": "Seiko",
     "modelCode": "SRPL03K1 (Giới hạn 9.999 chiếc toàn cầu)",
     "slug": "srpl03k1-gii-hn-9999-chic-ton-cu",
-    "image": "/images/unknown_nam_3.jpg",
+    "image": "/images/seiko_nam_3.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Hacking Second (Dừng kim giây)"],
       "glass": "Hardlex Crystal (Kính cứng)",
@@ -2034,7 +2034,7 @@
     "brand": "Seiko",
     "modelCode": "SRPL07J1",
     "slug": "srpl07j1",
-    "image": "/images/unknown_nam_4.jpg",
+    "image": "/images/seiko_nam_4.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Chức năng dừng kim giây (Hacking Stop)"],
       "glass": "Hardlex Crystal (Kính cứng)",
@@ -2059,7 +2059,7 @@
     "brand": "Seiko",
     "modelCode": "SPB501J1",
     "slug": "spb501j1",
-    "image": "/images/unknown_nam_5.jpg",
+    "image": "/images/seiko_nam_5.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Dạ quang LumiBrite"],
       "glass": "Sapphire (Kính chống trầy)",
@@ -2085,7 +2085,7 @@
     "brand": "Seiko",
     "modelCode": "SRPL05K1 (Giới hạn 9.999 chiếc toàn cầu)",
     "slug": "srpl05k1-gii-hn-9999-chic-ton-cu",
-    "image": "/images/unknown_nam_6.jpg",
+    "image": "/images/seiko_nam_6.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Hacking Second (Dừng kim giây)"],
       "glass": "Hardlex Crystal (Kính cứng)",
@@ -2110,7 +2110,7 @@
     "brand": "Seiko",
     "modelCode": "SRPJ45K1",
     "slug": "srpj45k1",
-    "image": "/images/unknown_nam_7.jpg",
+    "image": "/images/seiko_nam_7.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ"],
       "glass": "Hardlex Crystal (Kính cứng)",
@@ -2135,7 +2135,7 @@
     "brand": "Seiko",
     "modelCode": "SRPG57K1",
     "slug": "srpg57k1",
-    "image": "/images/unknown_nam_8.jpg",
+    "image": "/images/seiko_nam_8.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Lịch thứ", "Hacking Stop (dừng kim giây)"],
       "glass": "Hardlex Crystal (Kính cứng)",
@@ -2161,7 +2161,7 @@
     "brand": "Seiko",
     "modelCode": "SPB505J1",
     "slug": "spb505j1",
-    "image": "/images/unknown_nam_9.jpg",
+    "image": "/images/seiko_nam_9.jpg",
     "specs": {
       "functions": ["Lịch ngày", "La bàn", "Hacking Second"],
       "glass": "Sapphire (Phủ chống chói)",
@@ -2186,7 +2186,7 @@
     "brand": "Seiko",
     "modelCode": "SNE591P1",
     "slug": "sne591p1",
-    "image": "/images/unknown_nam_10.jpg",
+    "image": "/images/seiko_nam_10.jpg",
     "specs": {
       "functions": ["Lịch ngày", "Dạ quang LumiBrite", "Bezel xoay 1 chiều"],
       "glass": "Sapphire (Kính chống trầy)",
