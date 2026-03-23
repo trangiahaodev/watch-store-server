@@ -131,7 +131,7 @@ const getProductBySlug = async (req, res) => {
 // @desc    Lấy Top 10 Đồng hồ Nam (Bán chạy / Nổi bật)
 // @route   GET /api/products/top-men
 // @access  Public
-export const getTopMenProducts = async (req, res) => {
+const getTopMenProducts = async (req, res) => {
   try {
     // Tạm thời lấy 10 sản phẩm Nam.
     // Nếu DB của ông có trường 'sold' (đã bán), có thể thêm .sort({ sold: -1 })
@@ -145,7 +145,7 @@ export const getTopMenProducts = async (req, res) => {
 // @desc    Lấy Top 10 Đồng hồ Nữ
 // @route   GET /api/products/top-women
 // @access  Public
-export const getTopWomenProducts = async (req, res) => {
+const getTopWomenProducts = async (req, res) => {
   try {
     const products = await Product.find({ gender: "Nữ" });
     res.status(200).json({ products });
@@ -157,7 +157,7 @@ export const getTopWomenProducts = async (req, res) => {
 // @desc    Lấy 4 Mẫu đồng hồ mới nhất
 // @route   GET /api/products/newest
 // @access  Public
-export const getNewestProducts = async (req, res) => {
+const getNewestProducts = async (req, res) => {
   try {
     // Sắp xếp theo _id hoặc createdAt giảm dần (-1) để lấy đồ mới nhất
     const products = await Product.find({}).sort({ _id: -1 });
