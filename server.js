@@ -20,6 +20,7 @@ app.use(express.json()); // Để đọc được JSON từ body request
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/stats", statsRoutes);
 
 // Route mặc định để test server sống hay chết
 app.get("/", (req, res) => {
