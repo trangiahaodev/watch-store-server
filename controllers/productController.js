@@ -6,76 +6,80 @@ import Product from "../models/Product.js";
 const getAllProducts = async (req, res) => {
   try {
     const mongoQuery = {};
-
-    // 1. Xu ly filter
     const queryObj = { ...req.query };
-    // Cac field dac biet khong phai la tim kiem
+
+    // 1. Loại bỏ các field dùng cho phân trang & sort
     const excludedFields = ["page", "sort", "limit", "fields", "keyword"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    // Xy ly tu khoa
+    // 2. Xử lý thanh Tìm kiếm
     if (req.query.keyword) {
-      queryObj.$or = [
+      mongoQuery.$or = [
         { name: { $regex: req.query.keyword, $options: "i" } },
         { brand: { $regex: req.query.keyword, $options: "i" } },
         { modelCode: { $regex: req.query.keyword, $options: "i" } },
       ];
     }
 
-    // Xu ly loc theo gia
-    // URL: ?minPrice=2000000&maxPrice=10000000
+    // 3. Xử lý lọc theo Giá
     if (req.query.minPrice || req.query.maxPrice) {
       mongoQuery.price = {};
-      if (req.query.minPrice) {
+      if (req.query.minPrice)
         mongoQuery.price.$gte = Number(req.query.minPrice);
-      }
-      if (req.query.maxPrice) {
+      if (req.query.maxPrice)
         mongoQuery.price.$lte = Number(req.query.maxPrice);
-      }
     }
 
-    // Xu ly loc theo thuong hieu, gioi tinh
-    if (req.query.brand)
-      mongoQuery.brand = { $regex: req.query.brand, $options: "i" };
-    if (req.query.gender)
-      mongoQuery.gender = { $regex: req.query.gender, $options: "i" };
-
-    // Xu ly cac field nam trong specs: {}
-    // URL: ?glass=Sapphire -> {"specs.glass": "Sapphire"}
-    const specFields = ["glass", "movement", "strapMaterial", "caseMaterial"];
-    specFields.forEach((field) => {
+    // 4. BỘ LỌC ĐỘNG (DYNAMIC FILTERS)
+    // 4A. Các field nằm ở cấp độ 1 của Schema (Basic fields)
+    const basicFields = ["brand", "gender", "collectionName"];
+    basicFields.forEach((field) => {
       if (req.query[field]) {
-        mongoQuery[`specs.${field}`] = {
-          $regex: req.query[field],
-          $options: "i",
-        };
-        delete mongoQuery[field];
+        mongoQuery[field] = { $regex: req.query[field], $options: "i" };
       }
     });
 
+    // 4B. Các field nằm sâu bên trong object "specs" (Kỹ thuật, chất liệu...)
+    // Chìa khóa ở đây là: Key của Frontend gửi lên -> Value là đường dẫn trong DB
+    const specMapping = {
+      glass: "specs.glass",
+      movement: "specs.movement",
+      caseMaterial: "specs.caseMaterial",
+      style: "specs.style",
+      special: "specs.specialFeatures",
+      material: "specs.dialColor",
+      type: "specs.movement",
+    };
+
+    Object.keys(specMapping).forEach((frontendKey) => {
+      if (req.query[frontendKey]) {
+        const dbPath = specMapping[frontendKey];
+        mongoQuery[dbPath] = { $regex: req.query[frontendKey], $options: "i" };
+      }
+    });
+    // =========================================================
+
     let query = Product.find(mongoQuery);
 
-    // 2. Xu ly sort
-    // URL: ?sort=-price (giam dan), ?sort=price (tang dan)
+    // 5. Xử lý Sort
     if (req.query.sort) {
       const sortBy = req.query.sort.split(",").join(" ");
       query = query.sort(sortBy);
     } else {
-      query = query.sort("-createdAt");
+      query = query.sort("-createdAt"); // Mặc định Mới nhất
     }
 
-    // 3. Xu ly pagination
-    // URL: ?page=2&limit=12
+    // 6. Xử lý Pagination
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 12; // Default 12 san pham/trang
+    const limit = parseInt(req.query.limit) || 12;
     const skip = (page - 1) * limit;
 
     query = query.skip(skip).limit(limit);
 
-    // Execute query
+    // 7. Thực thi Query & Trả kết quả
     const products = await query;
-    // Dem tong so trang de tra ve Frontend
     const total = await Product.countDocuments(mongoQuery);
+
     res.json({
       success: true,
       count: products.length,
