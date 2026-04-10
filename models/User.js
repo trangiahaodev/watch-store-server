@@ -3,14 +3,48 @@ import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    isAdmin: { type: String, default: "false" },
-    phone: { type: String },
-    address: { type: String },
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+
+    // Trạng thái hoạt động (Dùng cho nút KHÓA TÀI KHOẢN)
+    // Mặc định tạo tài khoản xong là được hoạt động (true)
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+
+    // Ghi chú nội bộ (Chỉ Admin mới được xem/sửa)
+    adminNote: {
+      type: String,
+      default: "",
+    },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 // So sánh mật khẩu user nhập vào với mật khẩu đã mã hóa trong DB
