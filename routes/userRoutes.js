@@ -18,19 +18,16 @@ router.route("/").post(registerUser).get(protect, admin, getUsers);
 // Đăng nhập
 router.post("/login", authUser);
 
-// Lấy thông tin cá nhân (Đã fix bỏ :id trên URL bảo mật hơn)
+// Lấy thông tin cá nhân
 router.route("/profile").get(protect, getUserProfile);
 
 // Xem chi tiết hồ sơ của khách hàng
-// router.route("/:id/detail").get(protect, admin, getCustomerDetail);
-router.route("/:id/detail").get(getCustomerDetail); // Demo khi chua co Login
+router.route("/:id/detail").get(protect, admin, getCustomerDetail);
 
 // Bật / Tắt trạng thái khóa tài khoản
-// router.route("/:id/toggle-status").put(protect, admin, toggleUserStatus);
-router.route("/:id/toggle-status").put(toggleUserStatus); // Demo khi chua co Login
+router.route("/:id/toggle-status").put(protect, admin, toggleUserStatus);
 
 // Lưu ghi chú nội bộ của sale/admin
-// router.route("/:id/note").put(protect, admin, updateAdminNote);
-router.route("/:id/note").put(updateAdminNote); // Demo khi chua co Login
+router.route("/:id/note").put(protect, admin, updateAdminNote);
 
 export default router;
