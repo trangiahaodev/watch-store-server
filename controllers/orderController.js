@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import mongoose from "mongoose";
 
 // @desc    Tạo đơn hàng mới
 // @route   POST /api/orders
@@ -61,6 +62,10 @@ const getOrderById = async (req, res) => {
     if (!order) {
       return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
     }
+
+    // *********************************** Demo khi chua co Login ***********************************
+    // NHỚ XOÁ KHI XONG LOGIN
+    req.user = { _id: "69d9b49e51021ab5530841cd", isAdmin: true };
 
     const orderUserId = order.user ? order.user._id.toString() : null;
     const requestUserId = req.user._id.toString();

@@ -6,6 +6,7 @@ import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
+import mongoose from "mongoose";
 
 // 1. Config
 dotenv.config();

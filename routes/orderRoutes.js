@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import {
   addOrderItems,
   getOrderById,
@@ -19,8 +20,7 @@ router.route("/myorders").get(protect, getMyOrders);
 router.route("/").post(protect, addOrderItems).get(getOrders);
 
 // Lấy chi tiết 1 đơn
-// router.route("/:id").get(protect, getOrderById);
-router.route("/:id").get(getOrderById);
+router.route("/:id").get(protect, getOrderById);
 
 // Các route cho Admin cập nhật trạng thái
 // router.route("/:id/pay").put(protect, admin, updateOrderToPaid);
