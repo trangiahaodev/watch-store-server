@@ -56,7 +56,7 @@ const getOrderById = async (req, res) => {
     if (order) {
       // Bảo mật: Chỉ admin hoặc chủ nhân đơn hàng mới được xem
       if (
-        req.user.isAdmin === "true" ||
+        req.user.isAdmin ||
         order.user._id.toString() === req.user._id.toString()
       ) {
         res.json(order);
