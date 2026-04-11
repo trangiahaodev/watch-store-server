@@ -87,4 +87,65 @@ const getMyOrders = async (req, res) => {
   }
 };
 
-export { addOrderItems, getOrderById, getMyOrders };
+// @desc    Lấy tất cả đơn hàng (Dành cho Admin)
+// @route   GET /api/orders
+// @access  Private/Admin
+const getOrders = async (req, res) => {
+  try {
+    // Lấy tất cả đơn hàng, kèm thông tin user (tên, email), xếp mới nhất lên đầu
+    const orders = await Order.find({})
+      .populate("user", "name email")
+      .sort("-createdAt");
+    res.json(orders);
+  } catch (error) {
+    console.log(`getOrders in orderController: `, error.message);
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+};
+
+// @desc    Cập nhật trạng thái: Đã thanh toán
+// @route   PUT /api/orders/:id/pay
+// @access  Private/Admin
+const updateOrderToPaid = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } else {
+      res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+};
+
+// @desc    Cập nhật trạng thái: Đã giao hàng
+// @route   PUT /api/orders/:id/deliver
+// @access  Private/Admin
+const updateOrderToDelivered = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } else {
+      res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi Server" });
+  }
+};
+
+export {
+  addOrderItems,
+  getOrderById,
+  getMyOrders,
+  getOrders,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+};
