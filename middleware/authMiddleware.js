@@ -35,7 +35,7 @@ const protect = async (req, res, next) => {
 // 2. Middleware kiểm tra Quyền Admin (Người dùng có phải Admin không?)
 const admin = (req, res, next) => {
   // Nếu req.user tồn tại (nhờ protect) và có role là "admin"
-  if (req.user && req.user.role === "admin") {
+  if (req.user && req.user.isAdmin) {
     next(); // Cho phép đi tiếp vào controller
   } else {
     res.status(403).json({
