@@ -47,30 +47,32 @@ const addOrderItems = async (req, res) => {
 // @access  Private
 const getOrderById = async (req, res) => {
   try {
-    // Lấy order kèm theo thông tin (tên, email) của user tạo đơn đó
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res
+        .status(400)
+        .json({ message: "Định dạng mã đơn hàng không hợp lệ" });
+    }
+
     const order = await Order.findById(req.params.id).populate(
       "user",
       "name email",
     );
 
-    if (order) {
-      // Bảo mật: Chỉ admin hoặc chủ nhân đơn hàng mới được xem
-      if (
-        req.user.isAdmin ||
-        order.user._id.toString() === req.user._id.toString()
-      ) {
-        res.json(order);
-      } else {
-        res
-          .status(403)
-          .json({ message: "Bạn không có quyền xem đơn hàng này" });
-      }
+    if (!order) {
+      return res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+    }
+
+    const orderUserId = order.user ? order.user._id.toString() : null;
+    const requestUserId = req.user._id.toString();
+
+    if (req.user.isAdmin || (orderUserId && orderUserId === requestUserId)) {
+      res.json(order);
     } else {
-      res.status(404).json({ message: "Không tìm thấy đơn hàng" });
+      res.status(403).json({ message: "Bạn không có quyền xem đơn hàng này" });
     }
   } catch (error) {
-    console.log(`getOrderById in orderController: `, error.message);
-    res.status(500).json({ message: "Lỗi Server" });
+    console.error(`Lỗi getOrderById: ${error.message}`);
+    res.status(500).json({ message: "Lỗi Server khi tải chi tiết đơn hàng" });
   }
 };
 
