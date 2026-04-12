@@ -7,6 +7,7 @@ import {
   getCustomerDetail,
   toggleUserStatus,
   updateAdminNote,
+  updateUserProfile,
 } from "../controllers/userController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
@@ -19,7 +20,10 @@ router.route("/").post(registerUser).get(protect, admin, getUsers);
 router.post("/login", authUser);
 
 // Lấy thông tin cá nhân
-router.route("/profile").get(protect, getUserProfile);
+router
+  .route("/profile")
+  .get(protect, getUserProfile)
+  .put(protect, updateUserProfile);
 
 // Xem chi tiết hồ sơ của khách hàng
 router.route("/:id/detail").get(protect, admin, getCustomerDetail);

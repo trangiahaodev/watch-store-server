@@ -57,7 +57,6 @@ const getAllProducts = async (req, res) => {
         mongoQuery[dbPath] = { $regex: req.query[frontendKey], $options: "i" };
       }
     });
-    // =========================================================
 
     let query = Product.find(mongoQuery);
 
@@ -132,42 +131,56 @@ const getProductBySlug = async (req, res) => {
   }
 };
 
-// @desc    Lấy Top 10 Đồng hồ Nam (Bán chạy / Nổi bật)
-// @route   GET /api/products/top-men
-// @access  Public
-const getTopMenProducts = async (req, res) => {
+// @desc    Tạo sản phẩm mới
+// @route   POST /api/products
+// @access  Private/Admin
+const createProduct = async (req, res) => {
   try {
-    // Tạm thời lấy 10 sản phẩm Nam.
-    // Nếu DB của ông có trường 'sold' (đã bán), có thể thêm .sort({ sold: -1 })
-    const products = await Product.find({ gender: "Nam" });
-    res.status(200).json({ products });
+    // Nhận toàn bộ data từ form Frontend gửi lên
+    const product = new Product(req.body);
+    const createdProduct = await product.save();
+    res.status(201).json(createdProduct);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi Server khi tải Đồng hồ Nam" });
+    console.error("Lỗi tạo sản phẩm: ", error);
+    res.status(500).json({ message: "Lỗi Server khi tạo sản phẩm" });
   }
 };
 
-// @desc    Lấy Top 10 Đồng hồ Nữ
-// @route   GET /api/products/top-women
-// @access  Public
-const getTopWomenProducts = async (req, res) => {
+// @desc    Cập nhật thông tin sản phẩm
+// @route   PUT /api/products/:id
+// @access  Private/Admin
+const updateProduct = async (req, res) => {
   try {
-    const products = await Product.find({ gender: "Nữ" });
-    res.status(200).json({ products });
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      // Ghi đè các trường mới vào product cũ (chỉ cập nhật những field có gửi lên)
+      Object.assign(product, req.body);
+      const updatedProduct = await product.save();
+      res.json(updatedProduct);
+    } else {
+      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Lỗi Server khi tải Đồng hồ Nữ" });
+    console.error("Lỗi cập nhật sản phẩm: ", error);
+    res.status(500).json({ message: "Lỗi Server khi cập nhật sản phẩm" });
   }
 };
 
-// @desc    Lấy 4 Mẫu đồng hồ mới nhất
-// @route   GET /api/products/newest
-// @access  Public
-const getNewestProducts = async (req, res) => {
+// @desc    Xóa sản phẩm
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
+const deleteProduct = async (req, res) => {
   try {
-    // Sắp xếp theo _id hoặc createdAt giảm dần (-1) để lấy đồ mới nhất
-    const products = await Product.find({}).sort({ _id: -1 });
-    res.status(200).json({ products });
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      await Product.deleteOne({ _id: product._id });
+      res.json({ message: "Đã xóa sản phẩm thành công" });
+    } else {
+      res.status(404).json({ message: "Không tìm thấy sản phẩm" });
+    }
   } catch (error) {
-    res.status(500).json({ message: "Lỗi Server khi tải Hàng mới về" });
+    console.error("Lỗi xóa sản phẩm: ", error);
+    res.status(500).json({ message: "Lỗi Server khi xóa sản phẩm" });
   }
 };
 
@@ -175,7 +188,7 @@ export {
   getAllProducts,
   getProductById,
   getProductBySlug,
-  getTopMenProducts,
-  getTopWomenProducts,
-  getNewestProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
 };

@@ -189,6 +189,46 @@ const updateAdminNote = async (req, res) => {
   }
 };
 
+// @desc    Cập nhật thông tin cá nhân của User
+// @route   PUT /api/users/profile
+// @access  Private (Phải đăng nhập)
+const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.phone = req.body.phone || user.phone;
+      user.address = req.body.address || user.address;
+
+      // Xử lý cập nhật mật khẩu
+      if (req.body.password) {
+        user.password = req.body.password;
+      }
+
+      // Lưu vào Database
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        address: updatedUser.address,
+        isAdmin: updatedUser.isAdmin,
+        // Cấp lại token mới
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404).json({ message: "Không tìm thấy người dùng" });
+    }
+  } catch (error) {
+    console.log(`updateUserProfile in userController: `, error.message);
+    res.status(500).json({ message: "Lỗi Server khi cập nhật hồ sơ" });
+  }
+};
+
 export {
   authUser,
   registerUser,
@@ -197,4 +237,5 @@ export {
   getCustomerDetail,
   toggleUserStatus,
   updateAdminNote,
+  updateUserProfile,
 };
