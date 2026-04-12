@@ -22,12 +22,23 @@ const app = express();
 app.use(cors()); // Cho phép Frontend gọi API
 app.use(express.json()); // Để đọc được JSON từ body request
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const swaggerPath = path.resolve(process.cwd(), "swagger.yaml");
 const swaggerDocument = yaml.load(swaggerPath);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const swaggerOptions = {
+  customCssUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css",
+  customJs: [
+    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui-bundle.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui-standalone-preset.js",
+  ],
+};
+
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, swaggerOptions),
+);
 
 // 3. Routes
 app.use("/api/products", productRoutes);
