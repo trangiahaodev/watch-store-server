@@ -3,9 +3,9 @@ import {
   getAllProducts,
   getProductById,
   getProductBySlug,
-  getTopMenProducts,
-  getTopWomenProducts,
-  getNewestProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
 } from "../controllers/productController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
