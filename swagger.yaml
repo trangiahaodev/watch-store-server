@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: Hải Triều E-commerce API
+  description: Tài liệu API cho team Frontend & Backend
+  version: 1.0.0
+
+# THIẾT LẬP Ổ KHÓA BẢO MẬT (DÀNH CHO JWT TOKEN)
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+servers:
+  - url: https://watch-store-server-rust.vercel.app/
+    description: API Route
+
+paths:
+  # ==========================================
+  # NHÓM 1: PRODUCTS (SẢN PHẨM)
+  # ==========================================
+  /api/products:
+    get:
+      summary: Lấy danh sách sản phẩm (Hỗ trợ Lọc, Tìm kiếm, Phân trang)
+      tags: [Products]
+      parameters:
+        - in: query
+          name: keyword
+          schema: { type: string }
+          description: Từ khóa tìm kiếm (tên, hãng, mã)
+        - in: query
+          name: gender
+          schema: { type: string }
+          description: Lọc theo giới tính (Nam, Nữ)
+        - in: query
+          name: sort
+          schema: { type: string }
+          description: Sắp xếp (VD:-createdAt, price)
+      responses:
+        "200":
+          description: Trả về danh sách sản phẩm
+
+  /api/products/slug/{slug}:
+    get:
+      summary: Lấy chi tiết sản phẩm theo Slug (Dành cho trang chi tiết)
+      tags: [Products]
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Data 1 sản phẩm
+
+  # ==========================================
+  # NHÓM 2: USERS (NGƯỜI DÙNG & TÀI KHOẢN)
+  # ==========================================
+  /api/users/login:
+    post:
+      summary: Đăng nhập hệ thống
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, example: "admin@haitrieu.com" }
+                password: { type: string, example: "123" }
+      responses:
+        "200":
+          description: Đăng nhập thành công, có kèm Token
+
+  /api/users:
+    post:
+      summary: Đăng ký tài khoản
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                email: { type: string }
+                password: { type: string }
+      responses:
+        "201":
+          description: Tạo thành công
+    get:
+      summary: Lấy danh sách toàn bộ khách hàng (Admin)
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Danh sách user
+
+  /api/users/profile:
+    get:
+      summary: Lấy thông tin cá nhân của mình
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Data cá nhân
+    put:
+      summary: Cập nhật thông tin cá nhân
+      tags: [Users]
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                phone: { type: string }
+                address: { type: string }
+      responses:
+        "200":
+          description: Cập nhật thành công
+
+  # ==========================================
+  # NHÓM 3: ORDERS (ĐƠN HÀNG)
+  # ==========================================
+  /api/orders:
+    post:
+      summary: Tạo hóa đơn mới (Đặt hàng)
+      tags: [Orders]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderItems: { type: array }
+                shippingAddress: { type: object }
+                paymentMethod: { type: string }
+                totalPrice: { type: number }
+      responses:
+        "201":
+          description: Tạo đơn thành công
+    get:
+      summary: Lấy toàn bộ danh sách đơn hàng (Admin)
+      tags: [Orders]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Danh sách hóa đơn
+
+  /api/orders/myorders:
+    get:
+      summary: Xem lịch sử mua hàng của mình
+      tags: [Orders]
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Các đơn hàng đã đặt
