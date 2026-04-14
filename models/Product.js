@@ -33,7 +33,6 @@ const productSchema = new mongoose.Schema(
     },
     modelCode: {
       type: String,
-      unique: true,
     },
     gender: {
       type: String,
