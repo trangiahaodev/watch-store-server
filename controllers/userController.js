@@ -101,7 +101,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-// @desc    Lấy chi tiết Khách hàng + Lịch sử đơn hàng (Customer 360 View)
+// @desc    Lấy chi tiết Khách hàng + Lịch sử đơn hàng
 // @route   GET /api/users/:id/detail
 // @access  Private/Admin
 const getCustomerDetail = async (req, res) => {
@@ -155,6 +155,7 @@ const toggleUserStatus = async (req, res) => {
 
       user.isActive = !user.isActive;
       const updatedUser = await user.save();
+      console.log("updatedUser: ", updatedUser);
 
       res.json({
         message: updatedUser.isActive
@@ -166,6 +167,7 @@ const toggleUserStatus = async (req, res) => {
       res.status(404).json({ message: "Không tìm thấy khách hàng" });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Lỗi Server" });
   }
 };
