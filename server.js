@@ -20,7 +20,8 @@ const app = express();
 
 // 2. Middleware
 app.use(cors()); // Cho phép Frontend gọi API
-app.use(express.json()); // Để đọc được JSON từ body request
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 const swaggerPath = path.resolve(process.cwd(), "swagger.yaml");
 const swaggerDocument = yaml.load(swaggerPath);
