@@ -47,6 +47,7 @@ const getAllProducts = async (req, res) => {
       caseMaterial: "specs.caseMaterial",
       style: "specs.style",
       special: "specs.specialFeatures",
+      strapMaterial: "specs.strapMaterial",
       material: "specs.dialColor",
       type: "specs.movement",
     };
