@@ -77,13 +77,52 @@ const getOrderById = async (req, res) => {
   }
 };
 
-// @desc    Lấy danh sách đơn hàng của User đang đăng nhập (Lịch sử mua hàng)
+// @desc    Lấy danh sách đơn hàng của User đang đăng nhập (Lịch sử mua hàng + Thống kê)
 // @route   GET /api/orders/myorders
 // @access  Private
 const getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).sort("-createdAt");
-    res.json(orders);
+    // 1. Phân trang
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // 2. Lấy Danh sách đơn hàng
+    const orders = await Order.find({ user: req.user._id })
+      .sort("-createdAt")
+      .skip(skip)
+      .limit(limit);
+
+    // 3. Đếm Tổng số đơn hàng
+    const totalOrders = await Order.countDocuments({ user: req.user._id });
+
+    // 4. Tính tổng số tiền khách đã mua thành công
+    const spendingStats = await Order.aggregate([
+      {
+        $match: {
+          user: req.user._id,
+          isPaid: true, // Chỉ tính đơn đã thanh toán thành công
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSpent: { $sum: "$totalPrice" },
+        },
+      },
+    ]);
+
+    const totalSpent =
+      spendingStats.length > 0 ? spendingStats[0].totalSpent : 0;
+
+    res.json({
+      success: true,
+      totalOrders,
+      totalSpent,
+      totalPages: Math.ceil(totalOrders / limit),
+      currentPage: page,
+      orders,
+    });
   } catch (error) {
     console.log(`getMyOrders in orderController: `, error.message);
     res.status(500).json({ message: "Lỗi Server" });
