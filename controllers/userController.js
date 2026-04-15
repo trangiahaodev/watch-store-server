@@ -88,64 +88,16 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// @desc    Lấy danh sách tất cả Khách hàng
-// @route   GET /api/users
-// @access  Private/Admin
-// @desc    Lấy danh sách tất cả user kèm thống kê đơn hàng (Dành cho Admin)
+// @desc    Lấy danh sách tất cả Khách hàng (Dành cho trang AdminCustomerList)
 // @route   GET /api/users
 // @access  Private/Admin
 const getUsers = async (req, res) => {
   try {
-    const users = await User.aggregate([
-      {
-        // join với collection "order"
-        $lookup: {
-          from: "orders",
-          localField: "_id",
-          foreignField: "user",
-          as: "userOrders",
-        },
-      },
-      {
-        // Tính toán thống kê
-        $addFields: {
-          totalOrders: { $size: "$userOrders" }, // Tổng số đơn hàng
-          totalSpent: {
-            $sum: {
-              $map: {
-                input: {
-                  // Chỉ cộng tiền cho những đơn hàng đã thanh toán
-                  $filter: {
-                    input: "$userOrders",
-                    as: "order",
-                    cond: { $eq: ["$$order.isPaid", true] },
-                  },
-                },
-                as: "paidOrder",
-                in: "$$paidOrder.totalPrice",
-              },
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          password: 0,
-          userOrders: 0,
-        },
-      },
-      {
-        // Sắp xếp tài khoản mới nhất lên đầu
-        $sort: { createdAt: -1 },
-      },
-    ]);
-
+    // Lấy tất cả user (trừ password ra)
+    const users = await User.find({}).select("-password");
     res.json(users);
   } catch (error) {
-    console.error("Lỗi lấy danh sách User: ", error);
-    res
-      .status(500)
-      .json({ message: "Lỗi Server khi tải danh sách khách hàng" });
+    res.status(500).json({ message: "Lỗi lấy danh sách khách hàng" });
   }
 };
 
