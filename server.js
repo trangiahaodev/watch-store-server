@@ -22,6 +22,17 @@ app.use(cors()); // Cho phép Frontend gọi API
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
+// Middleware để xác nhận đã connect DB thành công -> controller
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error("Lỗi kết nối DB:", error);
+    res.status(500).json({ message: "Không thể kết nối Database" });
+  }
+});
+
 const swaggerPath = path.resolve(process.cwd(), "swagger.yaml");
 const swaggerDocument = yaml.load(swaggerPath);
 
