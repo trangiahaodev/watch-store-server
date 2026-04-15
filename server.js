@@ -7,7 +7,6 @@ import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
 import path from "path";
-import { fileURLToPath } from "url";
 
 import swaggerUi from "swagger-ui-express";
 import yaml from "yamljs";
@@ -47,7 +46,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/stats", statsRoutes);
 
-// Route mặc định để test server sống hay chết
+// Route mặc định để test server
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
