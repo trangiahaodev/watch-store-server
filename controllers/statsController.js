@@ -11,7 +11,7 @@ export const getDashboardStats = async (req, res) => {
 
     const orderCount = await Order.countDocuments();
     const productCount = await Product.countDocuments();
-    const userCount = await User.countDocuments({ role: "user" });
+    const userCount = await User.countDocuments({ isAdmin: false });
 
     const last7Days = await Order.aggregate([
       {
