@@ -10,7 +10,15 @@ const authUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
+    // Xác thực tài khoản còn hiệu lực và thông tin cá nhân
     if (user && (await user.matchPassword(password))) {
+      if (user.isActive === false) {
+        return res.status(403).json({
+          message:
+            "Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng liên hệ Admin!",
+        });
+      }
+
       res.json({
         _id: user._id,
         name: user.name,
